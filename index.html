@@ -504,7 +504,7 @@ input:focus, .select-input:focus {
     </div>
     <button id="save-key-btn" class="btn-primary btn-full" type="button">Attiva Assistente</button>
     <p class="modal-note">La chiave è salvata solo nel tuo browser (localStorage). Limite gratuito: 1.000 richieste/giorno · 30 req/min.</p>
-    <p style="text-align:center;font-size:.7rem;color:#ccc;margin-top:6px;">v1.5 · Cloudflare Proxy</p>
+    <p style="text-align:center;font-size:.7rem;color:#ccc;margin-top:6px;">v1.6</p>
   </div>
 </div>
 
@@ -541,13 +541,6 @@ input:focus, .select-input:focus {
       <button id="new-chat-btn" class="btn-secondary" type="button">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
         Nuova conversazione
-      </button>
-      <button id="settings-btn" class="btn-ghost" type="button">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-        </svg>
-        Impostazioni
       </button>
     </div>
   </aside>
@@ -632,40 +625,6 @@ input:focus, .select-input:focus {
   </main>
 </div>
 
-<!-- ===== SETTINGS MODAL ===== -->
-<div id="settings-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
-  <div class="modal">
-    <div class="modal-header-row">
-      <h2 id="settings-title">Impostazioni</h2>
-      <button id="close-settings-btn" class="btn-icon" aria-label="Chiudi" type="button">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </div>
-    <div class="input-group">
-      <label for="settings-api-key">API Key Groq</label>
-      <div class="input-row">
-        <input type="password" id="settings-api-key" placeholder="Incolla qui la tua API Key…" autocomplete="off" />
-        <button id="toggle-settings-key" class="btn-icon" title="Mostra/Nascondi" type="button">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="input-group">
-      <label for="model-select">Modello AI</label>
-      <select id="model-select" class="select-input">
-        <option value="llama-3.3-70b-versatile">Llama 3.3 70B — potente, ottimo italiano (raccomandato)</option>
-        <option value="llama-3.1-8b-instant">Llama 3.1 8B — ultrarapido, più leggero</option>
-        <option value="mixtral-8x7b-32768">Mixtral 8x7B — bilanciato</option>
-      </select>
-    </div>
-    <button id="save-settings-btn" class="btn-primary btn-full" type="button">Salva impostazioni</button>
-    <button id="delete-key-btn" class="btn-danger" type="button" style="margin-top:8px;">Elimina chiave e ricomincia</button>
-  </div>
-</div>
 
 <!-- ===== JAVASCRIPT ===== -->
 <script>
@@ -774,14 +733,6 @@ LINEE GUIDA DI RISPOSTA:
   const toggleKeyBtn     = document.getElementById('toggle-key-visibility');
   const saveKeyBtn       = document.getElementById('save-key-btn');
   const keyError         = document.getElementById('key-error');
-  const settingsModal    = document.getElementById('settings-modal');
-  const settingsBtn      = document.getElementById('settings-btn');
-  const closeSettingsBtn = document.getElementById('close-settings-btn');
-  const settingsApiKey   = document.getElementById('settings-api-key');
-  const toggleSettingsKey= document.getElementById('toggle-settings-key');
-  const modelSelect      = document.getElementById('model-select');
-  const saveSettingsBtn  = document.getElementById('save-settings-btn');
-  const deleteKeyBtn     = document.getElementById('delete-key-btn');
   const sidebarToggle    = document.getElementById('sidebar-toggle');
   const sidebar          = document.getElementById('sidebar');
   const newChatBtn       = document.getElementById('new-chat-btn');
@@ -816,21 +767,6 @@ LINEE GUIDA DI RISPOSTA:
     if (modelSelect) modelSelect.value = selectedModel;
   }
 
-  // ── SETTINGS ──────────────────────────────────────────────────────────────
-  settingsBtn.addEventListener('click', () => {
-    modelSelect.value = selectedModel;
-    settingsModal.classList.remove('hidden');
-  });
-
-  closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
-  settingsModal.addEventListener('click', (e) => { if (e.target === settingsModal) settingsModal.classList.add('hidden'); });
-
-  saveSettingsBtn.addEventListener('click', () => {
-    selectedModel = modelSelect.value;
-    localStorage.setItem('audika_model', selectedModel);
-    updateModelBadge();
-    settingsModal.classList.add('hidden');
-  });
 
   // ── SIDEBAR ────────────────────────────────────────────────────────────────
   sidebarToggle.addEventListener('click', () => {
@@ -975,7 +911,7 @@ LINEE GUIDA DI RISPOSTA:
   function formatApiError(err) {
     const msg = err.message || '';
     if (msg.includes('401') || msg.includes('invalid_api_key') || msg.includes('Unauthorized')) {
-      return 'API Key non valida. Vai in Impostazioni → incolla la chiave corretta (inizia con gsk_).';
+      return 'Errore di autenticazione. Contatta l\'amministratore del sito.';
     }
     if (msg.includes('429') || msg.includes('rate_limit') || msg.includes('rate limit')) {
       return 'Troppe richieste. Attendi qualche secondo e riprova.';
