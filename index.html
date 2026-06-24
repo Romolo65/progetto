@@ -488,7 +488,7 @@ input:focus, .select-input:focus {
     <div class="input-group">
       <label for="api-key-input">API Key Google Gemini</label>
       <div class="input-row">
-        <input type="password" id="api-key-input" placeholder="AIzaSy..." autocomplete="off" />
+        <input type="password" id="api-key-input" placeholder="Incolla qui la tua API Key..." autocomplete="off" />
         <button id="toggle-key-visibility" class="btn-icon" title="Mostra/Nascondi chiave" type="button">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
@@ -637,7 +637,7 @@ input:focus, .select-input:focus {
     <div class="input-group">
       <label for="settings-api-key">API Key Google Gemini</label>
       <div class="input-row">
-        <input type="password" id="settings-api-key" placeholder="AIzaSy…" autocomplete="off" />
+        <input type="password" id="settings-api-key" placeholder="Incolla qui la tua API Key…" autocomplete="off" />
         <button id="toggle-settings-key" class="btn-icon" title="Mostra/Nascondi" type="button">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
@@ -771,7 +771,7 @@ LINEE GUIDA DI RISPOSTA:
 
   // ── INIT ───────────────────────────────────────────────────────────────────
   function init() {
-    if (apiKey && apiKey.startsWith('AIza')) {
+    if (apiKey && apiKey.length > 10) {
       showApp();
     } else {
       setupModal.classList.remove('hidden');
@@ -798,8 +798,7 @@ LINEE GUIDA DI RISPOSTA:
   // ── API KEY SETUP ──────────────────────────────────────────────────────────
   saveKeyBtn.addEventListener('click', () => {
     const key = apiKeyInput.value.trim();
-    if (!key) { keyError.textContent = 'Inserisci una API Key valida.'; return; }
-    if (!key.startsWith('AIza')) { keyError.textContent = 'La chiave deve iniziare con "AIza".'; return; }
+    if (!key || key.length < 10) { keyError.textContent = 'Inserisci una API Key valida.'; return; }
     apiKey = key;
     localStorage.setItem('audika_gemini_key', key);
     keyError.textContent = '';
@@ -834,7 +833,7 @@ LINEE GUIDA DI RISPOSTA:
 
   saveSettingsBtn.addEventListener('click', () => {
     const newKey = settingsApiKey.value.trim();
-    if (newKey && !newKey.startsWith('•') && newKey.startsWith('AIza')) {
+    if (newKey && !newKey.startsWith('•') && newKey.length > 10) {
       apiKey = newKey;
       localStorage.setItem('audika_gemini_key', newKey);
     }
