@@ -539,13 +539,7 @@ input:focus, .select-input:focus {
 <div id="setup-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal">
     <div class="modal-logo">
-      <div class="logo-lockup" style="justify-content:center;">
-      <svg width="36" height="40" viewBox="0 0 36 40" fill="none" aria-hidden="true">
-        <circle cx="18" cy="17" r="17" fill="#1B7EC2"/>
-        <polygon points="2,38 9,24 17,31" fill="#1B7EC2"/>
-      </svg>
-      <span class="logo-wordmark">Audika</span>
-    </div>
+      <img src="/audika-logo.png" alt="Audika" style="height:44px;width:auto;">
     </div>
     <h2 id="modal-title">Configura il tuo assistente AI</h2>
     <p>Inserisci la tua API Key di <strong>Groq</strong> per attivare l'assistente.<br>
@@ -597,17 +591,14 @@ input:focus, .select-input:focus {
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar" aria-label="Navigazione categorie">
     <div class="sidebar-header">
-      <div class="logo-lockup logo-white logo-icon">
-      <svg width="36" height="40" viewBox="0 0 36 40" fill="none" aria-hidden="true">
-        <circle cx="18" cy="17" r="17" fill="white"/>
-        <polygon points="2,38 9,24 17,31" fill="white"/>
-      </svg>
-      <span class="logo-wordmark">Audika</span>
-    </div>
+      <div style="background:white;border-radius:8px;display:inline-block;padding:7px 12px;">
+        <img src="/audika-logo.png" alt="Audika" style="height:28px;width:auto;display:block;">
+      </div>
       <span class="sidebar-subtitle">Pro Assistant · Oticon</span>
     </div>
 
     <nav class="sidebar-nav">
+      <button id="home-btn" class="quick-btn" style="margin-bottom:12px;font-weight:600;" type="button"><span class="quick-icon">🏠</span>Home</button>
       <p class="nav-label">Categorie rapide</p>
       <button class="quick-btn" data-prompt="Dimmi tutti i modelli di apparecchi acustici Oticon attualmente disponibili, con caratteristiche principali e target di utenza."><span class="quick-icon">🎧</span>Apparecchi Acustici</button>
       <button class="quick-btn" data-prompt="Quali sono gli accessori wireless Oticon disponibili (ConnectClip, TV Adapter, RemoteControl, EduMic)? Descrivi funzioni e compatibilità con i modelli di apparecchi."><span class="quick-icon">📡</span>Accessori & Wireless</button>
@@ -876,6 +867,12 @@ LINEE GUIDA DI RISPOSTA:
   });
 
   backdrop.addEventListener('click', closeSidebar);
+
+  // Home button
+  document.getElementById('home-btn').addEventListener('click', () => {
+    clearChat();
+    if (window.innerWidth <= 768) closeSidebar();
+  });
 
   // Quick category buttons
   document.querySelectorAll('.quick-btn').forEach(btn => {
