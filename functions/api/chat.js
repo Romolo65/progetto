@@ -1,4 +1,13 @@
 export async function onRequestPost({ request, env }) {
+  if (!env.GROQ_API_KEY) {
+    return new Response(JSON.stringify({
+      error: { message: 'missing_api_key', code: 'missing_api_key' }
+    }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    });
+  }
+
   const body = await request.json();
 
   const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
